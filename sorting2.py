@@ -8,6 +8,8 @@ bn=[]
 btime=[]
 isort=[]
 itime=[]
+mergetime=[]
+mergeN=[]
 def swap(A, i, j):
 	if i!=j :
 		A[i], A[j] = A[j], A[i]
@@ -50,7 +52,35 @@ def insertionsort(A):
 			j -= 1
 		A[j+1] = val
 		yield A
+def mergeSort(A):
+    if len(A) >1:
+        mid = len(A)//2
+        L = A[:mid]
+        R = A[mid:]
 
+        mergeSort(L)
+        mergeSort(R)
+
+        i = j = k = 0
+
+        while i < len(L) and j < len(R):
+            if L[i] < R[j]:
+                A[k] = L[i]
+                i+=1
+            else:
+                A[k] = R[j]
+                j+=1
+            k+=1
+
+        while i < len(L):
+            A[k] = L[i]
+            i+=1
+            k+=1
+
+        while j < len(R):
+            A[k] = R[j]
+            j+=1
+            k+=1
 if __name__ == "__main__":
 	for N in range(1000000, 9900000, 1000000):
 		A = [x for x in range(0,N+1)]
@@ -76,6 +106,13 @@ if __name__ == "__main__":
 		time3=end-start
 		itime.append(time3)
 		isort.append(N)
+		random.shuffle(A)
+		start = clock()
+		merge=mergeSort(A)
+		end= clock()
+		time4=end-start
+		mergetime.append(time4)
+		mergeN.append(N)
 		print("Working...\n")
 		print("Thanks for using Hrithwik's Sorting xD \n")
 	print(Nvalue)
@@ -93,3 +130,8 @@ if __name__ == "__main__":
 	print(isort)
 	print("\n")
 	print(itime)
+	plt.plot(mergeN,mergetime)
+	plt.show()
+	print(mergeN)
+	print("\n")
+	print(mergetime)
