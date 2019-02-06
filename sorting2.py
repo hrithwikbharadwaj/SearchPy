@@ -4,12 +4,12 @@ from time import clock
 import time
 Selsort=[]
 Nvalue=[]
-bn=[]
+
 btime=[]
-isort=[]
+
 itime=[]
 mergetime=[]
-mergeN=[]
+
 def swap(A, i, j):
 	if i!=j :
 		A[i], A[j] = A[j], A[i]
@@ -52,86 +52,103 @@ def insertionsort(A):
 			j -= 1
 		A[j+1] = val
 		yield A
-def mergeSort(A):
-    if len(A) >1:
-        mid = len(A)//2
-        L = A[:mid]
-        R = A[mid:]
-
-        mergeSort(L)
-        mergeSort(R)
-
-        i = j = k = 0
-
-        while i < len(L) and j < len(R):
-            if L[i] < R[j]:
-                A[k] = L[i]
-                i+=1
-            else:
-                A[k] = R[j]
-                j+=1
-            k+=1
-
-        while i < len(L):
-            A[k] = L[i]
+def merge(left,right):
+    result = []
+    i,j = 0, 0
+    while i<len(left) and j< len(right):
+        if left[i] <= right[j]:
+            result.append(left[i])
             i+=1
-            k+=1
-
-        while j < len(R):
-            A[k] = R[j]
+        else:
+            result.append(right[j])
             j+=1
-            k+=1
+
+    result += left[i:]
+    result += right[j:]
+    return result
+
+
+def mergeSort(lst):
+    if(len(lst) <= 1):
+        return lst
+    mid = int(len(lst)/2)
+    left = mergeSort(lst[:mid])
+    right = mergeSort(lst[mid:])
+    return merge(left,right)
+
 if __name__ == "__main__":
+	count2=1
 	for N in range(1000000, 9900000, 1000000):
 		A = [x for x in range(0,N+1)]
 		int(random.uniform(0,99999))
+		random.shuffle(A)
 		start = clock()
 		sssort=selectionsort(A)
 		end= clock()
 		time=end-start
 		Selsort.append(time)
 		Nvalue.append(N)
+		print("Selection Sort Done\n")
 		random.shuffle(A)
+		print("Array Shuffled")
 		start = clock()
 
 		bsort=bubblesort(A)
 		end= clock()
 		time2=end-start
 		btime.append(time2)
-		bn.append(N)
+		print("Bubble Sort Done\n")
+
 		random.shuffle(A)
+		print("Array Shuffled")
 		start = clock()
 		iisort=insertionsort(A)
 		end= clock()
 		time3=end-start
 		itime.append(time3)
-		isort.append(N)
+		print("Insertion Sort Done\n")
 		random.shuffle(A)
+		print("Array Shuffled")
 		start = clock()
-		merge=mergeSort(A)
+		merges=mergeSort(A)
 		end= clock()
 		time4=end-start
 		mergetime.append(time4)
-		mergeN.append(N)
+		print("Merge Sort Done\n")
+
 		print("Working...\n")
-		print("Thanks for using Hrithwik's Sorting xD \n")
+		print("Thanks for using Hrithwik's Sorting xD \nCount=",count2)
+		count2+=1
 	print(Nvalue)
 	print("\n")
 	print(Selsort)
 	plt.plot(Nvalue,Selsort)
+	plt.title("Selection Sort")
+	plt.xlabel(" N value  (from 10lkhs)")
+	plt.ylabel("time in (S)")
 	plt.show()
-	plt.plot(bn,btime)
+
+	plt.plot(Nvalue,btime)
+	plt.xlabel(" N value  (from 10lkhs)")
+	plt.ylabel("time in (S)")
+	plt.title("Bubble Sort")
 	plt.show()
-	print(bn)
+
 	print("\n")
 	print(btime)
-	plt.plot(isort,itime)
+	plt.plot(Nvalue,itime)
+	plt.xlabel(" N value  (from 10lkhs)")
+	plt.ylabel("time in (S)")
+	plt.title("Insertion Sort")
 	plt.show()
-	print(isort)
+
 	print("\n")
 	print(itime)
-	plt.plot(mergeN,mergetime)
+	plt.plot(Nvalue,mergetime)
+	plt.xlabel(" N value  (from 10lkhs)")
+	plt.ylabel("time in (S)")
+	plt.title("Merge Sort")
 	plt.show()
-	print(mergeN)
+
 	print("\n")
 	print(mergetime)
