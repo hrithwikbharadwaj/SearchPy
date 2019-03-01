@@ -1,6 +1,9 @@
 from collections import defaultdict
 import random
-
+from time import clock
+import matplotlib.pyplot as plt
+timy=[]
+niy=[]
 class Graph:
     def __init__(self,vertices):
         self.graph = defaultdict(list)
@@ -37,14 +40,17 @@ class Graph:
 
 
         print (stack)
-N=6
-g= Graph(N)
-for _ in range(0,N):
-    v1=random.randint(1,10)
-    v2=random.randint(0,5)
-    g.addEdge(v1,v2);
-    print(v1,v2)
-
-
-print ("Following is a Topological Sort of the given graph")
-g.topologicalSort()
+for N in range(10000, 50000, 10000):
+    g= Graph(N)
+    start=clock()
+    for _ in range(0,N):
+        v1=random.randint(1,9)
+        v2=random.randint(0,9)
+        g.addEdge(v1,v2);
+        print(v1,v2)
+    g.topologicalSort()
+    end=clock()
+    timy.append(end-start)
+    niy.append(N)
+plt.plot(niy,timy)
+plt.show()
