@@ -2,10 +2,12 @@ import timeit as t
 import random
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import figure
+import statistics
 low=1
 high=10
 a=[]
 x=[]
+b=[]
 time_m=[]
 time_q=[]
 time_s=[]
@@ -62,7 +64,7 @@ def merge_sort(arr):
             k+=1
 def partition(arr,low,high):
     i = ( low-1 )
-    pivot = a[low]
+    pivot = statistics.median(a)
 
     for j in range(low , high):
 
@@ -125,7 +127,8 @@ def heapSort(arr):
 
 	for i in range(n, -1, -1):
 		heapify(arr, n, i,)
-    for i in range(n-1, 0, -1):
+
+	for i in range(n-1, 0, -1):
 		swap(arr,arr[i],arr[0])
 
 		heapify(arr, i, 0,)
@@ -147,9 +150,12 @@ def bubbleSort(arr):
 
     return count2
 if __name__ == "__main__":
-    for N in range (1,500,100):
-        for i in range(0,N):
-            a.append(random.randint(1,100))
+    for N in range (1,2000,200):
+        for i in range(N):
+            a.append(random.randint(0,10))
+            b.append(random.randint(0,10))
+
+
 
         start=t.default_timer()
         merge_sort(a)
@@ -158,9 +164,9 @@ if __name__ == "__main__":
         time_m.append(end-start)
         random.shuffle(a)
         start=t.default_timer()
-        quick_sort(a,0,len(a)-1)
+        quick_sort(b,0,N-1)
         end=t.default_timer()
-        print('Quick Sort: \nTime for sorting %d elements is %f' %(len(a),end-start))
+        print('Quick Sort: \nTime for sorting %d elements is %f' %(len(b),end-start))
         time_q.append(end-start)
         random.shuffle(a)
         start=t.default_timer()
@@ -198,9 +204,9 @@ if __name__ == "__main__":
     plt.plot(x, time_h,label='Heap Sort')
     plt.legend(loc='upper left')
         # naming the x axis
-    plt.xlabel('Input')
+    plt.xlabel('Input(N)')
         # naming the y axis
-    plt.ylabel('Time')
+    plt.ylabel('Time in (seconds)')
     plt.grid()
     plt.scatter(x,time_s)
     plt.scatter(x,time_b)
@@ -209,6 +215,6 @@ if __name__ == "__main__":
     plt.scatter(x,time_i)
     plt.scatter(x,time_h)
 
-    plt.title('Sort')
+    plt.title('Six Sorts')
 
     plt.show()
