@@ -78,16 +78,19 @@ def partition(arr,low,high):
     arr[i+1],arr[high] = arr[high],arr[i+1]
     return ( i+1 )
 
-def insertionsort(A):
-	n = len(A)
-	for i in range(1,n):
-		val = A[i]
-		j = i-1
-		while j>=0 and A[j] > val:
-			swap(A, j, j+1)
-			j -= 1
-		A[j+1] = val
-		yield A
+def insertionsort(arr):
+
+
+    for i in range(1, len(arr)):
+
+        key = arr[i]
+
+        
+        j = i-1
+        while j >= 0 and key < arr[j] :
+                arr[j + 1] = arr[j]
+                j -= 1
+        arr[j + 1] = key
 def quick_sort(arr,low,high):
     if low < high:
 
@@ -217,4 +220,4 @@ if __name__ == "__main__":
 
     plt.title('Six Sorts')
 
-    plt.show()
+plt.show()
